@@ -20,4 +20,3 @@
 -S : 누적된 정보를 출력한다(cumulative 모드).
 
 ### top 실행 예제
-![image]https://dbscthumb-phinf.pstatic.net/4938_000_1/20170705212456131_V9D3Q4JJL.jpg/ka38_331_i1.jpg?type=w575_fst_n&wm=Y
