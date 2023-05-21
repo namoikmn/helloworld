@@ -72,6 +72,8 @@ ps(=process status) 줄인말로, 현재 실핸중인 프로세스 목록과 상
 
 * -e: 커널 프로세스 제외한 모든 프로세스 
 
+* -ef: 표준 문장으로 시스템의 모든 프로세스를 출력
+
 * -f: 풀포멧 보여줌.
  
 * -l/l: 긴 포멧을 보여줌.
@@ -171,3 +173,40 @@ Jun07 | START | 프로세스가 시작된 날짜
 - -l: 시그널로 사용할 수 있는 시그널의 이름들을 보여줌.
 - -1,: -HUP 프로세스 재활성화
 - -9: 프로세스 강제종료
+
+### 쉘스크립트 kill, ps 사용 예시
+특정 프로세스 종료시키는 쉘 스크립트
+```bash
+# ps -ef을 이용해서 원하는 프로세스 정보를 얻는다.
+var1=$(ps -ef | grep 'run_loop\.sh$')
+var2=$(ps -ef | grep 'JenkinsHelper\.jar')
+
+#echo process info : ${var1}
+#echo process info : ${var2}
+
+# pid를 얻는다. (공백으로 잘라서, 두번째 argument)
+second1=$(echo ${var1} | cut -d " " -f2)
+second2=$(echo ${var2} | cut -d " " -f2)
+
+#echo pid : ${second1} / length : ${#second1}
+#echo pid : ${second2} / length : ${#second1}
+
+# pid가 존재할 경우 프로세스를 kill 한다.
+
+# -n 스트링은, 문자열 길이가 0 이 아닐 경우 true를 리턴한다.
+if [ -n "${second1}" ]
+then
+        result1=$(kill -9 ${second1})
+        echo "process is killed."
+else
+        echo "running process not found."
+fi
+
+if [ -n "${second2}" ]
+then
+        result2=$(kill -9 ${second2})
+        echo "process is killed."
+else
+        echo "running process not found."
+fi
+```
